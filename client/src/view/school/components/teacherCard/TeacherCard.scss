@@ -1,0 +1,21 @@
+.teacherCard{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 65%;
+    height: fit-content;
+
+    // border: 1px blue solid;
+
+    .content{
+        font-size: medium;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        // border: 1px blue solid;
+    }
+    span{
+        font-weight: bold;
+    }
+}
