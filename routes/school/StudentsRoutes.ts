@@ -1,4 +1,3 @@
-import { Password } from "@mui/icons-material";
 import loginStatus from "../../controllers/login";
 import { connection } from "../../server";
 

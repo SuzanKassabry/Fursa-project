@@ -1,5 +1,4 @@
-import express from 'express';
-import { connect } from 'http2';
+import express from "express";
 const app = express();
 const port = 4000;
 const mysql = require('mysql');

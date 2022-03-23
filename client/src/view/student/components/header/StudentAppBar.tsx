@@ -12,6 +12,7 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import { Link } from 'react-router-dom';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 const pages = ['myclass', 'homeworks', 'exams'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
@@ -101,15 +102,15 @@ const StudentResponsiveAppBar = () => {
                             // >
                             //     {page}
                             // </Button>
-                              <Link to={`../studentUser/${page}`}>
+                            <Link to={`../studentUser/${page}`}>
                                 <Button
-                                  key={page}
-                                  onClick={handleCloseNavMenu}
-                                  sx={{ my: 2, color: 'white', display: 'block' }}
+                                    key={page}
+                                    onClick={handleCloseNavMenu}
+                                    sx={{ my: 2, color: 'white', display: 'block' }}
                                 >
-                                  {page}
+                                    {page}
                                 </Button>
-                              </Link>
+                            </Link>
 
                         ))}
                     </Box>
@@ -117,7 +118,9 @@ const StudentResponsiveAppBar = () => {
                     <Box sx={{ flexGrow: 0 }}>
                         <Tooltip title="Open settings">
                             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                                <Avatar>
+                                    <AccountCircleIcon />
+                                </Avatar>
                             </IconButton>
                         </Tooltip>
                         <Menu
