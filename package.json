@@ -1,0 +1,21 @@
+{
+  "name": "fursa-project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server/server.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server/server.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SuzanKassabry/Fursa-project.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SuzanKassabry/Fursa-project/issues"
+  },
+  "homepage": "https://github.com/SuzanKassabry/Fursa-project#readme"
+}
