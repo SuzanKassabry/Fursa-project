@@ -7,7 +7,7 @@ const mysql = require('mysql');
 require('dotenv').config();
 const cookieParser = require('cookie-parser');
 
-app.use(express.static('../client/build'));
+app.use(express.static('./client/build'));
 app.use(express.json());
 app.use(cookieParser());
 

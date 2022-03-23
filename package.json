@@ -1,21 +1,23 @@
 {
-  "name": "fursa-project",
+  "name": "suzan",
   "version": "1.0.0",
   "description": "",
-  "main": "server/server.ts",
+  "main": "server.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server/server.ts"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/SuzanKassabry/Fursa-project.git"
+    "start": "node server.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/SuzanKassabry/Fursa-project/issues"
+  "dependencies": {
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3",
+    "mongoose": "^6.2.4",
+    "ts-node": "^10.5.0"
   },
-  "homepage": "https://github.com/SuzanKassabry/Fursa-project#readme"
+  "devDependencies": {
+    "@types/express": "^4.17.1",
+    "@types/node": "^17.0.21"
+  }
 }
