@@ -14,7 +14,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import './StudentExams.scss';
 import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
-import { courseExams, getExamsAsync } from "../../../../app/reducers/student/CourseDataSlice";
+import { classExams, getExamsAsync } from "../../../../app/reducers/student/ClassDataSlice";
 
 // const exams = [
 //     { course: "English", material: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." },
@@ -24,9 +24,12 @@ import { courseExams, getExamsAsync } from "../../../../app/reducers/student/Cou
 export default function StudentExams() {
     const dispatch = useAppDispatch();
     useEffect(() => {
-        dispatch(getExamsAsync());
+        axios.post('/student/get-class-id-by-student-id').then(({data}) => {
+            console.log(data.id);
+            dispatch(getExamsAsync(data.id));
+        });
     }, []);
-    const exams = useAppSelector(courseExams);
+    const exams = useAppSelector(classExams);
 
     const [selectedDate, setSelectedDate] = useState<Date | null>(
         new Date(),
@@ -75,13 +78,13 @@ export default function StudentExams() {
                             <TableBody>
                                 {
                                     exams.map((exam, i) => {
-                                        const { course, examMaterial } = exam;
+                                        const { name, examMaterial } = exam;
                                         return (
                                             <TableRow
                                                 key={i}
                                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                             >
-                                                <TableCell align="center">{course}</TableCell>
+                                                <TableCell align="center">{name}</TableCell>
                                                 <TableCell align="center">{examMaterial}</TableCell>
                                             </TableRow>
                                         );

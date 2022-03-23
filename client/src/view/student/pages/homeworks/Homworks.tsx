@@ -13,21 +13,17 @@ import Typography from '@mui/material/Typography';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useAppDispatch, useAppSelector } from '../../../../app/hooks';
-import { courseHomeworks, getHomeworksAsync } from '../../../../app/reducers/student/CourseDataSlice';
-
-// const homeworks = [
-//     { date: '20.2.2022', course: 'Math', description: 'questions from 1 to 15 page 225' },
-//     { date: '20.2.2022', course: 'Arabic', description: 'reading page 25' },
-//     { date: '18.2.2022', course: 'Science', description: 'question 3+4 page 15' },
-//     { date: '15.2.2022', course: 'Math', description: 'questions 20-25 page 333' }
-// ]
+import { classHomeworks, getHomeworksAsync } from '../../../../app/reducers/student/ClassDataSlice';
 
 export default function StudentHomeworks() {
     const dispatch = useAppDispatch();
     useEffect(() => {
-        dispatch(getHomeworksAsync());
+        axios.post('/student/get-class-id-by-student-id').then(({data}) => {
+            dispatch(getHomeworksAsync(data.id));
+        });
     }, []);
-    const homeworks = useAppSelector(courseHomeworks);
+    const homeworks = useAppSelector(classHomeworks);
+    console.log(homeworks)
 
     return (
         <div>
@@ -56,7 +52,7 @@ export default function StudentHomeworks() {
                             <TableBody>
                                 {
                                     homeworks.map((homework, i) => {
-                                        const { date, course, description } = homework;
+                                        const { date, name, description } = homework;
                                         return (
                                             <TableRow
                                                 key={i}
@@ -65,7 +61,7 @@ export default function StudentHomeworks() {
                                                 <TableCell align="center" component="th" scope="row">
                                                     {date}
                                                 </TableCell>
-                                                <TableCell align="center">{course}</TableCell>
+                                                <TableCell align="center">{name}</TableCell>
                                                 <TableCell align="center">{description}</TableCell>
                                             </TableRow>
                                         );

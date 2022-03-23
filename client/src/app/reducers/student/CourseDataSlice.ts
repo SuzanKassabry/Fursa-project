@@ -51,9 +51,9 @@ export const getMaterialAsync = createAsyncThunk (
 
 export const getHomeworksAsync = createAsyncThunk (
     'courseData/fetchHomeworks',
-    async(_, thunkAPI) => {
+    async(classId:any, thunkAPI) => {
         try{
-            const response = await axios.get('http://localhost:3004/homeworks');
+            const response = await axios.post('/student/get-homeworks-by-course-id', {classId:classId});
             const data = response.data;
             return data;
         } catch (error:any) {

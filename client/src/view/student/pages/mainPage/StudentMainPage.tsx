@@ -8,7 +8,7 @@ import './StudentMainPage.scss';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from '../../../../app/hooks';
-import { classCourses, getCoursesAsync } from "../../../../app/reducers/student/ClassDataSlice";
+import { classCourses, classUpdates, getCoursesAsync, getUpdatesAsync } from "../../../../app/reducers/student/ClassDataSlice";
 
 const class_name = 'Class 1A';
 
@@ -18,25 +18,32 @@ const class_name = 'Class 1A';
 //     { name: "Science", teacher: "Zahera Bisharat" }, { name: "Caution on streets", teacher: "Doaa margieh" }
 // ]
 
-const updates = [
-    { update: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' },
-    { update: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' },
-    { update: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' },
-    { update: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' },
-    { update: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' }
-]
+// const updates = [
+//     { update: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' },
+//     { update: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' },
+//     { update: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' },
+//     { update: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' },
+//     { update: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' }
+// ]
 
 export default function StudentMainPage() {
-    // const [courses, setCourses] = useState([]);
+    const [classId, setClassId] = useState(-1);
     const dispatch = useAppDispatch();
     useEffect(() => {
-        dispatch(getCoursesAsync());
+        axios.post('/student/get-class-id-by-student-id').then(({data}) => {
+            setClassId(data.id)
+            dispatch(getUpdatesAsync(data.id));
+            dispatch(getCoursesAsync(data.id));
+        });
+        
+        
         //     axios.get('http://localhost:3004/studentCourses').then(({data})=>{
         //         console.log(data);
         //         setCourses(data);
         // })
     }, []);
     const courses = useAppSelector(classCourses);
+    const updates = useAppSelector(classUpdates);
 
     return (
         <div>

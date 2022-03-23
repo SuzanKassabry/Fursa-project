@@ -1,4 +1,4 @@
-import express from "express";
+import express from 'express';
 const app = express();
 const port = 4000;
 const mysql = require('mysql');
@@ -63,8 +63,20 @@ app.use('/school', studentsRoute_school);
 const coursesRoute_school = require('./routes/school/CoursesRoutes')
 app.use('/school', coursesRoute_school);
 
+const classRoute_student = require('./routes/student/ClassRoutes')
+app.use('/student', classRoute_student);
+
 const coursesRoute_student = require('./routes/student/CoursesRoutes')
 app.use('/student', coursesRoute_student);
+
+const updatesRoute_student = require('./routes/student/UpdatesRoutes')
+app.use('/student', updatesRoute_student);
+
+const homeworksRoute_student = require('./routes/student/HomeworksRoutes')
+app.use('/student', homeworksRoute_student);
+
+const examsRoute_student = require('./routes/student/ExamsRoutes')
+app.use('/student', examsRoute_student);
 
 
 //server listening

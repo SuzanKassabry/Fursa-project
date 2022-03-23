@@ -16,6 +16,8 @@ export default function loginStatus(req, res, next): void {
                 req.type = 'unknown'
                 req.userId = -1;
             }
+        }else {
+            console.log('in loginStatus error: no userinfo')
         }
         next();
 
