@@ -68,6 +68,6 @@ app.use('/student', coursesRoute_student);
 
 
 //server listening
-app.listen(port, () => {
+app.listen(process.env.PORT || port, () => {
   return console.log(`Express is listening at http://localhost:${port}`);
 });
