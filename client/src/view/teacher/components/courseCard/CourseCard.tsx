@@ -7,6 +7,7 @@ import './CourseCard.scss';
 
 interface CourseCardProps {
     info: {
+        id: number
         name: string
         class_name: string
     }
@@ -14,11 +15,11 @@ interface CourseCardProps {
 }
 
 export default function CourseCard(props: CourseCardProps) {
-    const { name, class_name } = props.info;
+    const { name, class_name, id } = props.info;
     const dispatch = useAppDispatch();
 
     function handleClick(){
-        dispatch(select([name, class_name]));
+        dispatch(select([name, class_name, id]));
     }
     
     return (

@@ -13,18 +13,14 @@ import axios from 'axios';
 import { useAppSelector, useAppDispatch } from '../../../../app/hooks';
 import './TeacherHomeworks.scss';
 import { courseHomeworks, getHomeworksAsync } from "../../../../app/reducers/teacher/CourseDataSlice";
-
-// const homeworks = [
-//     { date: '20.2.2022', course: 'Math', description: 'questions from 1 to 15 page 225' },
-//     { date: '20.2.2022', course: 'Arabic', description: 'reading page 25' },
-//     { date: '18.2.2022', course: 'Science', description: 'question 3+4 page 15' },
-//     { date: '15.2.2022', course: 'Math', description: 'questions 20-25 page 333' }
-// ]
+import { selectedCourseId } from "../../../../app/reducers/teacher/CourseCardSlice";
 
 export default function TeacherHomeworks() {
+    const courseId = useAppSelector(selectedCourseId);
+    console.log(courseId);
     const dispatch = useAppDispatch();
     useEffect(() => {
-        dispatch(getHomeworksAsync());
+        dispatch(getHomeworksAsync(courseId));
     }, []);
     const homeworks = useAppSelector(courseHomeworks);
 
@@ -53,7 +49,7 @@ export default function TeacherHomeworks() {
                             <TableBody>
                                 {
                                     homeworks.map((homework, i) => {
-                                        const { date, course, description } = homework;
+                                        const { date, name, description } = homework;
                                         return (
                                             <TableRow
                                                 key={i}
@@ -62,7 +58,7 @@ export default function TeacherHomeworks() {
                                                 <TableCell align="center" component="th" scope="row">
                                                     {date}
                                                 </TableCell>
-                                                <TableCell align="center">{course}</TableCell>
+                                                <TableCell align="center">{name}</TableCell>
                                                 <TableCell align="center">{description}</TableCell>
                                             </TableRow>
                                         );

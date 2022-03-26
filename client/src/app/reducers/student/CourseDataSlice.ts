@@ -21,11 +21,15 @@ interface Exam {
     examMaterial:String
 }
 
+interface Update {
+    update: string
+}
+
 interface CourseData {
     material:Array<Material>,
     homeworks:Array<Homework>,
     exams:Array<Exam>,
-    // updates:Array,
+    updates: Array<Update>,
     status: 'idle' | 'loading' | 'failed'
 }
 
@@ -33,14 +37,15 @@ const initialState:CourseData = {
     material:[],
     homeworks: [],
     exams: [],
+    updates: [],
     status: 'idle'
 }
 
 export const getMaterialAsync = createAsyncThunk (
     'courseData/fetchMaterial',
-    async(_, thunkAPI) => {
+    async(courseId:any, thunkAPI) => {
         try{
-            const response = await axios.get('http://localhost:3004/courseMaterial');
+            const response = await axios.post('/student/get-material-by-course-id', {courseId:courseId});
             const data = response.data;
             return data;
         } catch (error:any) {
@@ -74,6 +79,19 @@ export const getExamsAsync = createAsyncThunk (
         }
     }    
 );
+
+export const getUpdatesAsync = createAsyncThunk(
+    'courseData/fetchUpdates',
+    async (courseId:any, thunkAPI) => {
+        try {
+            const response = await axios.post('/student/get-updates-by-course-id', {courseId:courseId});
+            const data = response.data;
+            return data;
+        } catch (error: any) {
+            thunkAPI.rejectWithValue(error.response.data)
+        }
+    }
+)
 
 export const studentCourseReducer = createSlice ({
     name: 'courseData',
@@ -113,10 +131,21 @@ export const studentCourseReducer = createSlice ({
         .addCase(getExamsAsync.rejected, (state:any) => {
             state.status = 'failed'
         })
+        .addCase(getUpdatesAsync.pending, (state:any) => {
+            state.status = 'loading'
+        })
+        .addCase(getUpdatesAsync.fulfilled, (state:any, action:any) => {
+            state.status = 'idle';
+            state.updates = action.payload;
+        })
+        .addCase(getUpdatesAsync.rejected, (state:any) => {
+            state.status = 'failed'
+        })
     }
 })
 
 export const courseMaterial = (state:RootState) => state.studentCourseData.material;
 export const courseHomeworks = (state:RootState) => state.studentCourseData.homeworks;
 export const courseExams = (state:RootState) => state.studentCourseData.exams;
+export const courseUpdates = (state:RootState) => state.studentCourseData.updates;
 export default studentCourseReducer.reducer;

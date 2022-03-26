@@ -51,6 +51,7 @@ db.once("open", () => {
 const userRoute = require('./routes/user/UserRoutes')
 app.use('/user', userRoute);
 
+//school routes
 const classesRoute_school = require('./routes/school/ClassesRoutes')
 app.use('/school', classesRoute_school);
 
@@ -63,6 +64,7 @@ app.use('/school', studentsRoute_school);
 const coursesRoute_school = require('./routes/school/CoursesRoutes')
 app.use('/school', coursesRoute_school);
 
+//student routes
 const classRoute_student = require('./routes/student/ClassRoutes')
 app.use('/student', classRoute_student);
 
@@ -78,6 +80,24 @@ app.use('/student', homeworksRoute_student);
 const examsRoute_student = require('./routes/student/ExamsRoutes')
 app.use('/student', examsRoute_student);
 
+const materialRoute_student = require('./routes/student/MaterialRoutes')
+app.use('/student', materialRoute_student);
+
+//teacher routes
+const coursesRoute_teacher = require('./routes/teacher/CoursesRoutes')
+app.use('/teacher', coursesRoute_teacher);
+
+const materialRoute_teacher = require('./routes/teacher/MaterialRoutes')
+app.use('/teacher', materialRoute_teacher);
+
+const updatesRoute_teacher = require('./routes/teacher/UpdatesRoutes')
+app.use('/teacher', updatesRoute_teacher);
+
+const homeworksRoute_teacher = require('./routes/teacher/HomeworksRoutes')
+app.use('/teacher', homeworksRoute_teacher);
+
+const examsRoute_teacher = require('./routes/teacher/ExamsRoutes')
+app.use('/teacher', examsRoute_teacher);
 
 //server listening
 app.listen(process.env.PORT || port, () => {

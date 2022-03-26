@@ -59,6 +59,10 @@ export default function Login() {
                         nav('/studentUser/myclass')
                         break;
                     }
+                    case 'teacher':{
+                        nav('/teacherUser/home')
+                        break;
+                    }
                 }
             } else {
                 console.log('log in failed')

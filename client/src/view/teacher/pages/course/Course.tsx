@@ -1,6 +1,6 @@
 import Divider from "@mui/material/Divider";
 import Typography from "@mui/material/Typography";
-import { selectedClassName, selectedCourseName } from "../../../../app/reducers/teacher/CourseCardSlice";
+import { selectedClassName, selectedCourseId, selectedCourseName } from "../../../../app/reducers/teacher/CourseCardSlice";
 import CourseResponsiveAppBar from "../../components/courseHeader/CourseAppBar";
 import MaterialSection from "../../components/materialSection/MaterialSection";
 import UpdatesList from "../../components/updatesList/UpdatesList";
@@ -8,41 +8,37 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useAppSelector, useAppDispatch } from '../../../../app/hooks';
 import './Course.scss';
-import { courseMaterial, getMaterialAsync } from "../../../../app/reducers/teacher/CourseDataSlice";
+import { courseMaterial, courseUpdates, getMaterialAsync, getUpdatesAsync } from "../../../../app/reducers/teacher/CourseDataSlice";
 import Button from "@mui/material/Button";
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import NewMaterialDialog from "../../components/newMaterialDialog/NewMaterialDialog";
 import NewHomeworkDialog from "../../components/newHomeworkDialog/NewHomeworkDialog";
 import NewExamDialog from "../../components/newExamDialog/NewExamDialog";
 
-// const materials = [
-//     { title: 'material title1', description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' },
-//     { title: 'material title2', description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' },
-//     { title: 'material title3', description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' },
-//     { title: 'material title4', description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' },
-//     { title: 'material title5', description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' }
+// const updates = [
+//     { update: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' },
+//     { update: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' },
+//     { update: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' },
+//     { update: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' },
+//     { update: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' }
 // ]
-
-const updates = [
-    { update: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' },
-    { update: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' },
-    { update: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' },
-    { update: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' },
-    { update: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' }
-]
 
 export default function Course() {
     const courseName = useAppSelector(selectedCourseName);
     const className = useAppSelector(selectedClassName);
+    const courseId = useAppSelector(selectedCourseId);
+    
     const [openMaterialDialog, setOpenMaterialDialog] = useState(false);
     const [openHomeworkDialog, setOpenHomeworkDialog] = useState(false);
     const [openExamDialog, setOpenExamDialog] = useState(false);
 
     const dispatch = useAppDispatch();
     useEffect(() => {
-        dispatch(getMaterialAsync());
+        dispatch(getMaterialAsync(courseId));
+        dispatch(getUpdatesAsync(courseId));
     }, []);
     const materials = useAppSelector(courseMaterial);
+    const updates = useAppSelector(courseUpdates);
 
     function handleOpenMaterialDialog(){
         setOpenMaterialDialog(true)
@@ -104,7 +100,7 @@ export default function Course() {
 
 
                     <div className="course__recentUpdates">
-                        <Typography className='title' variant='subtitle2' align='center'>RECENT UPDATES</Typography>
+                        <Typography className='title' variant='subtitle2' align='center'>COURSE RECENT UPDATES</Typography>
                         <UpdatesList updates={updates} />
                     </div>
                 </div>

@@ -12,20 +12,6 @@ import { classCourses, classUpdates, getCoursesAsync, getUpdatesAsync } from "..
 
 const class_name = 'Class 1A';
 
-// const courses = [
-//     { name: "Arabic", teacher: "Manal Misherky" }, { name: "Mathmatics", teacher: "Manal Bisharat" },
-//     { name: "English", teacher: "Rania Ateek" }, { name: "Hebrew", teacher: "Areen Awwad" },
-//     { name: "Science", teacher: "Zahera Bisharat" }, { name: "Caution on streets", teacher: "Doaa margieh" }
-// ]
-
-// const updates = [
-//     { update: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' },
-//     { update: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' },
-//     { update: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' },
-//     { update: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' },
-//     { update: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' }
-// ]
-
 export default function StudentMainPage() {
     const [classId, setClassId] = useState(-1);
     const dispatch = useAppDispatch();
@@ -84,7 +70,7 @@ export default function StudentMainPage() {
                     </span>
 
                     <div className="coursesAndRecentUpdates__right">
-                        <Typography className='title' variant='subtitle2' align='center'>RECENT UPDATES</Typography>
+                        <Typography className='title' variant='subtitle2' align='center'>CLASS RECENT UPDATES</Typography>
                         <UpdatesList updates={updates}></UpdatesList>
                     </div>
                 </div>

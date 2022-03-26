@@ -9,11 +9,10 @@ import schoolReducer from './reducers/school/SchoolSlice';
 import courseReducer from './reducers/teacher/CourseDataSlice';
 import studentCourseReducer from './reducers/student/CourseDataSlice';
 import classDataReducer from './reducers/student/ClassDataSlice';
+import teacherReducer from './reducers/teacher/TeacherSlice';
 
 export const store = configureStore({
   reducer: {
-    // counter: counterReducer,
-    //  text:textReducer,
     courseCard: courseCardReducer, 
     teacherCourseCard: teacherCourseCardReducer,
     schoolClassCard: schoolClassCardReducer,
@@ -21,7 +20,8 @@ export const store = configureStore({
     schoolData: schoolReducer,
     courseData: courseReducer,
     studentCourseData: studentCourseReducer,
-    classData: classDataReducer
+    classData: classDataReducer,
+    teacherData: teacherReducer
   },
 });
 

@@ -9,7 +9,7 @@ router.use(loginStatus);
 router.post('/get-courses-by-class-id', async (req, res) => {
     const {classId} = req.body
 
-    const query = `SELECT * 
+    const query = `SELECT test_schema.courses_table.id, test_schema.courses_table.name, test_schema.teachers_table.firstName, test_schema.teachers_table.lastName
     FROM test_schema.courses_table INNER JOIN test_schema.teachers_table
     ON test_schema.courses_table.teacherID = test_schema.teachers_table.id
     WHERE test_schema.courses_table.classID = ${classId}`;

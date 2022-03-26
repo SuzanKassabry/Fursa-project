@@ -15,16 +15,13 @@ import axios from 'axios';
 import './TeacherExams.scss';
 import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
 import { courseExams, getExamsAsync } from "../../../../app/reducers/teacher/CourseDataSlice";
-
-// const exams = [
-//     { course: "English", material: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' },
-//     { course: "Math", material: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' }
-// ]
+import { selectedCourseId } from "../../../../app/reducers/teacher/CourseCardSlice";
 
 export default function TeacherExams() {
+    const courseId = useAppSelector(selectedCourseId);
     const dispatch = useAppDispatch();
     useEffect(() => {
-        dispatch(getExamsAsync());
+        dispatch(getExamsAsync(courseId));
     }, []);
     const exams = useAppSelector(courseExams);
 
@@ -67,13 +64,13 @@ export default function TeacherExams() {
                             <TableBody>
                                 {
                                     exams.map((exam, i) => {
-                                        const { course, examMaterial } = exam;
+                                        const { name, examMaterial } = exam;
                                         return (
                                             <TableRow
                                                 key={i}
                                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                             >
-                                                <TableCell align="center">{course}</TableCell>
+                                                <TableCell align="center">{name}</TableCell>
                                                 <TableCell align="center">{examMaterial}</TableCell>
                                             </TableRow>
                                         );

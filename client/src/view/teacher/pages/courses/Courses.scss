@@ -10,10 +10,13 @@
         margin-top: 50px;
     }
 
-    &__courses {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        margin-top: 20px;
+    .coursesContainer {
+        &__courses {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 20px;
+        }
     }
+
 }

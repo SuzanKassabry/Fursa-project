@@ -7,6 +7,7 @@ import './CourseCard.scss';
 
 interface CourseCardProps {
     info: {
+        id: number
         name: string
         firstName: string
         lastName: string
@@ -15,12 +16,12 @@ interface CourseCardProps {
 }
 
 export default function CourseCard(props: CourseCardProps) {
-    const { name, firstName, lastName } = props.info;
+    const { name, firstName, lastName, id } = props.info;
     const teacher = firstName.concat(' ', lastName);
     const dispatch = useAppDispatch();
 
     function handleClick(){
-        dispatch(select([name, teacher]));
+        dispatch(select([name, teacher, id]));
     }
 
     return (

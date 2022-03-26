@@ -1,17 +1,21 @@
 import Divider from "@mui/material/Divider";
 import Typography from "@mui/material/Typography";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
+import { getCoursesAsync, teacherCourses } from "../../../../app/reducers/teacher/TeacherSlice";
 import CourseCard from "../../components/courseCard/CourseCard";
 import TeacherResponsiveAppBar from "../../components/header/TeacherAppBar";
 import './Courses.scss';
 
-const courses = [
-    { name: "Arabic", class_name: "class 1A" }, { name: "Arabic", class_name: "class 1B" },
-    { name: "Arabic", class_name: "class 2A" }, { name: "Hebrew", class_name: "class 2A" },
-    { name: "Hebrew", class_name: "class 2B" }
-]
-
 export default function Courses() {
+    const dispatch = useAppDispatch();
+    useEffect(() => {
+        dispatch(getCoursesAsync());
+        
+    }, []);
+    const courses = useAppSelector(teacherCourses);
+    
     return (
         <div>
 

@@ -11,21 +11,25 @@ interface Material {
 interface Homework {
     id:number,
     date:string,
-    course:string,
+    name:string,
     description:string
 }
 
 interface Exam {
     id:number,
-    course:string,
+    name:string,
     examMaterial:String
+}
+
+interface Update {
+    update: string
 }
 
 interface CourseData {
     material:Array<Material>,
     homeworks:Array<Homework>,
     exams:Array<Exam>,
-    // updates:Array,
+    updates:Array<Update>,
     status: 'idle' | 'loading' | 'failed'
 }
 
@@ -33,14 +37,15 @@ const initialState:CourseData = {
     material:[],
     homeworks: [],
     exams: [],
+    updates: [],
     status: 'idle'
 }
 
 export const getMaterialAsync = createAsyncThunk (
     'courseData/fetchMaterial',
-    async(_, thunkAPI) => {
+    async(courseId:any, thunkAPI) => {
         try{
-            const response = await axios.get('http://localhost:3004/courseMaterial');
+            const response = await axios.post('/teacher/get-material-by-course-id', {courseId:courseId});
             const data = response.data;
             return data;
         } catch (error:any) {
@@ -51,9 +56,9 @@ export const getMaterialAsync = createAsyncThunk (
 
 export const getHomeworksAsync = createAsyncThunk (
     'courseData/fetchHomeworks',
-    async(_, thunkAPI) => {
+    async(courseId:any, thunkAPI) => {
         try{
-            const response = await axios.get('http://localhost:3004/homeworks');
+            const response = await axios.post('/teacher/get-homeworks-by-course-id', {courseId:courseId});
             const data = response.data;
             return data;
         } catch (error:any) {
@@ -64,9 +69,9 @@ export const getHomeworksAsync = createAsyncThunk (
 
 export const getExamsAsync = createAsyncThunk (
     'courseData/fetchExams',
-    async(_, thunkAPI) => {
+    async(courseId:any, thunkAPI) => {
         try{
-            const response = await axios.get('http://localhost:3004/exams');
+            const response = await axios.post('/teacher/get-exams-by-course-id', {courseId:courseId});
             const data = response.data;
             return data;
         } catch (error:any) {
@@ -74,6 +79,19 @@ export const getExamsAsync = createAsyncThunk (
         }
     }    
 );
+
+export const getUpdatesAsync = createAsyncThunk(
+    'courseData/fetchUpdates',
+    async (courseId:any, thunkAPI) => {
+        try {
+            const response = await axios.post('/teacher/get-updates-by-course-id', {courseId:courseId});
+            const data = response.data;
+            return data;
+        } catch (error: any) {
+            thunkAPI.rejectWithValue(error.response.data)
+        }
+    }
+)
 
 export const courseReducer = createSlice ({
     name: 'courseData',
@@ -113,10 +131,21 @@ export const courseReducer = createSlice ({
         .addCase(getExamsAsync.rejected, (state:any) => {
             state.status = 'failed'
         })
+        .addCase(getUpdatesAsync.pending, (state:any) => {
+            state.status = 'loading'
+        })
+        .addCase(getUpdatesAsync.fulfilled, (state:any, action:any) => {
+            state.status = 'idle';
+            state.updates = action.payload;
+        })
+        .addCase(getUpdatesAsync.rejected, (state:any) => {
+            state.status = 'failed'
+        })
     }
 })
 
 export const courseMaterial = (state:RootState) => state.courseData.material;
 export const courseHomeworks = (state:RootState) => state.courseData.homeworks;
 export const courseExams = (state:RootState) => state.courseData.exams;
+export const courseUpdates = (state:RootState) => state.courseData.updates;
 export default courseReducer.reducer;

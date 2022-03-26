@@ -2,13 +2,13 @@ import Divider from "@mui/material/Divider";
 import Typography from "@mui/material/Typography";
 import { useEffect, useState} from "react";
 import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
-import { selectedCourseName, selectedTeacherName } from "../../../../app/reducers/student/CourseCardSlice";
+import { selectedCourseId, selectedCourseName, selectedTeacherName } from "../../../../app/reducers/student/CourseCardSlice";
 import StudentResponsiveAppBar from "../../components/header/StudentAppBar";
 import MaterialSection from "../../components/materialSection/MaterialSection";
 import UpdatesList from "../../components/updatesList/UpdatesList";
 import axios from 'axios';
 import './Course.scss';
-import { courseMaterial, getMaterialAsync } from "../../../../app/reducers/student/CourseDataSlice";
+import { courseMaterial, courseUpdates, getMaterialAsync, getUpdatesAsync } from "../../../../app/reducers/student/CourseDataSlice";
 
 // const materials = [
 //     { title: 'material title1', description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' },
@@ -18,23 +18,26 @@ import { courseMaterial, getMaterialAsync } from "../../../../app/reducers/stude
 //     { title: 'material title5', description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' }
 // ]
 
-const updates = [
-    { update: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' },
-    { update: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' },
-    { update: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' },
-    { update: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' },
-    { update: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' }
-]
+// const updates = [
+//     { update: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' },
+//     { update: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' },
+//     { update: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' },
+//     { update: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' },
+//     { update: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' }
+// ]
 
 export default function StudentCourse() {
     const courseName = useAppSelector(selectedCourseName);
     const teacherName = useAppSelector(selectedTeacherName);
+    const courseId = useAppSelector(selectedCourseId)
 
     const dispatch = useAppDispatch();
     useEffect(() => {
-        dispatch(getMaterialAsync());
+        dispatch(getMaterialAsync(courseId));
+        dispatch(getUpdatesAsync(courseId));
     }, []);
     const materials = useAppSelector(courseMaterial);
+    const updates = useAppSelector(courseUpdates);
 
     return (
         <div>
@@ -76,7 +79,7 @@ export default function StudentCourse() {
 
 
                     <div className="course__recentUpdates">
-                        <Typography className='title' variant='subtitle2' align='center'>RECENT UPDATES</Typography>
+                        <Typography className='title' variant='subtitle2' align='center'>COURSE RECENT UPDATES</Typography>
                         <UpdatesList updates={updates} />
                     </div>
                 </div>
