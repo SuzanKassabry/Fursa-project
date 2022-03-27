@@ -8,35 +8,34 @@ import TextField from '@mui/material/TextField';
 import { useState } from 'react';
 import axios from 'axios';
 import { useAppDispatch, useAppSelector } from '../../../../app/hooks';
-import { selectedCourseId } from '../../../../app/reducers/teacher/CourseCardSlice';
-import { getHomeworksAsync } from '../../../../app/reducers/teacher/CourseDataSlice';
+import { selectedCourseId, selectedClassId } from '../../../../app/reducers/teacher/CourseCardSlice';
+import { getUpdatesAsync } from '../../../../app/reducers/teacher/CourseDataSlice';
 
 interface dialogProps {
     open: any;
     setOpen: any;
 }
 
-export default function NewHomeworkDialog(props: dialogProps) {
+export default function NewUpdateDialog(props: dialogProps) {
     const { open, setOpen } = props
-    const [homework, setHomework] = useState("");
+    const [update, setUpdate] = useState("");
     const courseId = useAppSelector(selectedCourseId);
+    const classId = useAppSelector(selectedClassId);
     const dispatch = useAppDispatch();
 
     const handleClose = () => {
         setOpen(false);
     };
 
-    function handleHomework(ev:any){
-        // console.log(ev.target.value)
-        setHomework(ev.target.value);
+    function handleUpdate(ev: any) {
+        setUpdate(ev.target.value);
     }
 
-    function handleAdd(){
-        // const date = new Date();
-        if(homework !== "") {
-            axios.post('/teacher/add-new-homework', { 'description': homework, 'date':"", 'courseId':courseId })
-            // .then(({ data }) => console.log(data));
-            // dispatch(getHomeworksAsync(courseId));
+    async function handleAdd() {
+        if (update !== "" ) {
+            await axios.post('/teacher/add-new-update', { 'update': update, 'courseId':courseId, 'classId':classId })
+                // .then(({ data }) => console.log(data));
+            dispatch(getUpdatesAsync(courseId)); 
         }
         handleClose();
     }
@@ -44,25 +43,24 @@ export default function NewHomeworkDialog(props: dialogProps) {
     return (
         <div>
             <Dialog open={open} onClose={handleClose} fullWidth={true}>
-                <DialogTitle>new homework</DialogTitle>
+                <DialogTitle>new update</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        insert homework bellow:
+                        update:
                     </DialogContentText>
                     <TextField
                         autoFocus
                         margin="normal"
                         id="name"
-                        label="homework"
+                        label="title"
                         type="text"
                         variant="standard"
                         required
                         fullWidth
-                        multiline
-                        rows={2}
-                        onKeyUp={handleHomework}
+                        onKeyUp={handleUpdate}
                     />
                 </DialogContent>
+                
                 <DialogActions>
                     <Button onClick={handleClose}>Cancel</Button>
                     <Button onClick={handleAdd}>add</Button>

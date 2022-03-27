@@ -25,4 +25,21 @@ router.post('/get-exams-by-course-id', async (req, res) => {
     })
 })
 
+router.post('/add-new-exam', async (req, res) => {
+    const {examMaterial, date, courseId} = req.body;
+
+    const query = `INSERT INTO test_schema.exams (examMaterial, courseID)
+    VALUES ('${examMaterial}', ${courseId})`
+
+    connection.query(query, (err, result) => {
+        try {
+            if (err)  throw err;
+            res.send(result)
+        } catch (error) {
+            console.log(`In add-new-exam error: ${error.message}`);
+            res.status(500).send({error: error.message});
+        }
+    })
+})
+
 module.exports = router;

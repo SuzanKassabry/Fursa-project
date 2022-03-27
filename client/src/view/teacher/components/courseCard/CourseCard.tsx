@@ -10,16 +10,17 @@ interface CourseCardProps {
         id: number
         name: string
         class_name: string
+        class_id:number
     }
 
 }
 
 export default function CourseCard(props: CourseCardProps) {
-    const { name, class_name, id } = props.info;
+    const { name, class_name, id, class_id } = props.info;
     const dispatch = useAppDispatch();
 
     function handleClick(){
-        dispatch(select([name, class_name, id]));
+        dispatch(select([name, class_name, id, class_id]));
     }
     
     return (

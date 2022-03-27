@@ -62,9 +62,6 @@ router.post('/get-class-by-id', async(req, res) => {
 })
 
 router.post('/add-new-class', async (req, res) => {
-    // const name = 'class 5B';
-    // const teacher = 2;
-    // const schoolId = 1;
     const schoolId = req.userId;
     const {className, teacherId} = req.body;
 

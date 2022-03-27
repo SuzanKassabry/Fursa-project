@@ -25,4 +25,21 @@ router.post('/get-homeworks-by-course-id', async (req, res) => {
     })
 })
 
+router.post('/add-new-homework', async (req, res) => {
+    const {description, date, courseId} = req.body;
+
+    const query = `INSERT INTO test_schema.homeworks (description, courseID)
+    VALUES ('${description}', ${courseId})`
+
+    connection.query(query, (err, result) => {
+        try {
+            if (err)  throw err;
+            res.send(result)
+        } catch (error) {
+            console.log(`In add-new-homework error: ${error.message}`);
+            res.status(500).send({error: error.message});
+        }
+    })
+})
+
 module.exports = router;

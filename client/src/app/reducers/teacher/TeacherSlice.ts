@@ -5,7 +5,8 @@ import axios from 'axios';
 interface Course {
     id: number,
     name: string,
-    class_name: string
+    class_name: string,
+    class_id: number
 }
 
 interface Class {

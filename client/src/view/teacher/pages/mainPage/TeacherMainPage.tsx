@@ -60,7 +60,7 @@ export default function TeacherMainPage() {
                 <div className="myCourses">
                     {
                         courses.map((course, i) => {
-                            const { name, class_name } = course;
+                            const { name, class_name, class_id } = course;
                             return (
                                 <Link to="../teacherUser/coursePage" key={i}>
                                     <CourseCard info={course} />

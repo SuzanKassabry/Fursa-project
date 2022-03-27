@@ -22,4 +22,23 @@ router.post('/get-updates-by-course-id', async (req, res) => {
     })
 })
 
+router.post('/add-new-update', async (req, res) => {
+    const {update, courseId, classId} = req.body;
+
+    const query = `INSERT INTO test_schema.updates (test_schema.updates.update, classID, courseID) 
+    VALUES ('${update}', ${classId}, ${courseId})`
+    // VALUES ('${update}', ${classId}, ${courseId})`
+    console.log(query)
+
+    connection.query(query, (err, result) => {
+        try {
+            if (err)  throw err;
+            res.send(result)
+        } catch (error) {
+            console.log(`In add-new-update error: ${error.message}`);
+            res.status(500).send({error: error.message});
+        }
+    })
+})
+
 module.exports = router;

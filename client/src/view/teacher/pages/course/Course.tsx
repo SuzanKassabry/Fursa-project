@@ -14,6 +14,7 @@ import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import NewMaterialDialog from "../../components/newMaterialDialog/NewMaterialDialog";
 import NewHomeworkDialog from "../../components/newHomeworkDialog/NewHomeworkDialog";
 import NewExamDialog from "../../components/newExamDialog/NewExamDialog";
+import NewUpdateDialog from "../../components/newUpdateDialog/NewUpdateDialog";
 
 // const updates = [
 //     { update: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' },
@@ -31,6 +32,7 @@ export default function Course() {
     const [openMaterialDialog, setOpenMaterialDialog] = useState(false);
     const [openHomeworkDialog, setOpenHomeworkDialog] = useState(false);
     const [openExamDialog, setOpenExamDialog] = useState(false);
+    const [openUpdateDialog, setOpenUpdateDialog] = useState(false);
 
     const dispatch = useAppDispatch();
     useEffect(() => {
@@ -52,6 +54,10 @@ export default function Course() {
         setOpenExamDialog(true)
     }
 
+    function handleOpenUpdateDialog(){
+        setOpenUpdateDialog(true)
+    }
+
     return (
         <div>
             <div className="bar">
@@ -69,11 +75,12 @@ export default function Course() {
                     <Button variant="outlined" startIcon={<AddOutlinedIcon />} onClick={handleOpenMaterialDialog}>Material</Button>
                     <Button variant="outlined" startIcon={<AddOutlinedIcon />} onClick={handleOpenHomeworkDialog}>Homework</Button>
                     <Button variant="outlined" startIcon={<AddOutlinedIcon />} onClick={handleOpenExamDialog}>Exam</Button>
-                    <Button variant="outlined" startIcon={<AddOutlinedIcon />} disabled>Update</Button>
+                    <Button variant="outlined" startIcon={<AddOutlinedIcon />} onClick={handleOpenUpdateDialog}>Update</Button>
 
                     <NewMaterialDialog open={openMaterialDialog} setOpen={setOpenMaterialDialog}/>
                     <NewHomeworkDialog open={openHomeworkDialog} setOpen={setOpenHomeworkDialog}/>
                     <NewExamDialog open={openExamDialog} setOpen={setOpenExamDialog}/>
+                    <NewUpdateDialog open={openUpdateDialog} setOpen={setOpenUpdateDialog} />
                 </div>
 
                 <div className="course">

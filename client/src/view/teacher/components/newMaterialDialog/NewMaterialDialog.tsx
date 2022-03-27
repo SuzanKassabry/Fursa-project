@@ -7,6 +7,9 @@ import DialogTitle from '@mui/material/DialogTitle';
 import TextField from '@mui/material/TextField';
 import { useState } from 'react';
 import axios from 'axios';
+import { useAppDispatch, useAppSelector } from '../../../../app/hooks';
+import { selectedCourseId } from '../../../../app/reducers/teacher/CourseCardSlice';
+import { getMaterialAsync } from '../../../../app/reducers/teacher/CourseDataSlice';
 
 interface dialogProps {
     open: any;
@@ -17,26 +20,27 @@ export default function NewMaterialDialog(props: dialogProps) {
     const { open, setOpen } = props
     const [materialTitle, setMaterialTitle] = useState("");
     const [materialDescription, setMaterialDescription] = useState("");
+    const courseId = useAppSelector(selectedCourseId);
+    const dispatch = useAppDispatch();
 
     const handleClose = () => {
         setOpen(false);
     };
 
     function handleMaterialTitle(ev: any) {
-        // console.log(ev.target.value)
         setMaterialTitle(ev.target.value);
     }
 
     function handleMaterialDescription(ev: any) {
-        // console.log(ev.target.value)
         setMaterialDescription(ev.target.value)
     }
 
-    function handleAdd() {
+    async function handleAdd() {
         if (materialTitle !== "" && materialDescription !== "") {
-            axios.post('http://localhost:3004/courseMaterial', { 'title': materialTitle, 'description': materialDescription })
-                .then(({ data }) => console.log(data));
-                 
+            await axios.post('/teacher/add-new-material', 
+            { 'title': materialTitle, 'description': materialDescription, 'courseId':courseId })
+                // .then(({ data }) => console.log(data));
+            dispatch(getMaterialAsync(courseId)); 
         }
         handleClose();
     }

@@ -23,4 +23,21 @@ router.post('/get-material-by-course-id', async (req, res) => {
     })
 })
 
+router.post('/add-new-material', async (req, res) => {
+    const {title, description, courseId} = req.body;
+
+    const query = `INSERT INTO test_schema.materials (title, description, courseID)
+    VALUES ('${title}', '${description}', ${courseId})`
+
+    connection.query(query, (err, result) => {
+        try {
+            if (err)  throw err;
+            res.send(result)
+        } catch (error) {
+            console.log(`In add-new-material error: ${error.message}`);
+            res.status(500).send({error: error.message});
+        }
+    })
+})
+
 module.exports = router;
