@@ -27,8 +27,6 @@ router.post('/add-new-update', async (req, res) => {
 
     const query = `INSERT INTO test_schema.updates (test_schema.updates.update, classID, courseID) 
     VALUES ('${update}', ${classId}, ${courseId})`
-    // VALUES ('${update}', ${classId}, ${courseId})`
-    console.log(query)
 
     connection.query(query, (err, result) => {
         try {

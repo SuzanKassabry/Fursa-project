@@ -26,10 +26,10 @@ router.post('/get-homeworks-by-course-id', async (req, res) => {
 })
 
 router.post('/add-new-homework', async (req, res) => {
-    const {description, date, courseId} = req.body;
+    const {description, date, courseId, classId} = req.body;
 
-    const query = `INSERT INTO test_schema.homeworks (description, courseID)
-    VALUES ('${description}', ${courseId})`
+    const query = `INSERT INTO test_schema.homeworks (description, courseID, classID)
+    VALUES ('${description}', ${courseId}, ${classId})`
 
     connection.query(query, (err, result) => {
         try {

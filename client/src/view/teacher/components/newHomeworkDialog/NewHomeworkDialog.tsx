@@ -8,7 +8,7 @@ import TextField from '@mui/material/TextField';
 import { useState } from 'react';
 import axios from 'axios';
 import { useAppDispatch, useAppSelector } from '../../../../app/hooks';
-import { selectedCourseId } from '../../../../app/reducers/teacher/CourseCardSlice';
+import { selectedCourseId, selectedClassId } from '../../../../app/reducers/teacher/CourseCardSlice';
 import { getHomeworksAsync } from '../../../../app/reducers/teacher/CourseDataSlice';
 
 interface dialogProps {
@@ -20,6 +20,7 @@ export default function NewHomeworkDialog(props: dialogProps) {
     const { open, setOpen } = props
     const [homework, setHomework] = useState("");
     const courseId = useAppSelector(selectedCourseId);
+    const classId = useAppSelector(selectedClassId);
     const dispatch = useAppDispatch();
 
     const handleClose = () => {
@@ -34,7 +35,7 @@ export default function NewHomeworkDialog(props: dialogProps) {
     function handleAdd(){
         // const date = new Date();
         if(homework !== "") {
-            axios.post('/teacher/add-new-homework', { 'description': homework, 'date':"", 'courseId':courseId })
+            axios.post('/teacher/add-new-homework', { 'description': homework, 'date':"", 'courseId':courseId, 'classId':classId })
             // .then(({ data }) => console.log(data));
             // dispatch(getHomeworksAsync(courseId));
         }

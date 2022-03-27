@@ -8,7 +8,7 @@ import TextField from '@mui/material/TextField';
 import { useState } from 'react';
 import axios from 'axios';
 import { useAppSelector } from '../../../../app/hooks';
-import { selectedCourseId } from '../../../../app/reducers/teacher/CourseCardSlice';
+import { selectedCourseId, selectedClassId } from '../../../../app/reducers/teacher/CourseCardSlice';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
@@ -22,6 +22,7 @@ export default function NewExamDialog(props: dialogProps) {
     const { open, setOpen } = props
     const [examMaterial, setExamMaterial] = useState("");
     const courseId = useAppSelector(selectedCourseId);
+    const classId = useAppSelector(selectedClassId);
 
     const [selectedDate, setSelectedDate] = useState<Date | null>(
         new Date(),
@@ -43,7 +44,7 @@ export default function NewExamDialog(props: dialogProps) {
 
     function handleAdd() {
         if (examMaterial !== "") {
-            axios.post('/teacher/add-new-exam', { 'examMaterial': examMaterial, 'courseId':courseId })
+            axios.post('/teacher/add-new-exam', { 'examMaterial': examMaterial, 'courseId':courseId, 'classId':classId })
                 // .then(({ data }) => console.log(data));
 
         }

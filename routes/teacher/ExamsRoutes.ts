@@ -26,10 +26,10 @@ router.post('/get-exams-by-course-id', async (req, res) => {
 })
 
 router.post('/add-new-exam', async (req, res) => {
-    const {examMaterial, date, courseId} = req.body;
+    const {examMaterial, date, courseId, classId} = req.body;
 
-    const query = `INSERT INTO test_schema.exams (examMaterial, courseID)
-    VALUES ('${examMaterial}', ${courseId})`
+    const query = `INSERT INTO test_schema.exams (examMaterial, courseID, classID)
+    VALUES ('${examMaterial}', ${courseId}, ${classId})`
 
     connection.query(query, (err, result) => {
         try {
