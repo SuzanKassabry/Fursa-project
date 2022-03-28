@@ -42,10 +42,7 @@ router.post('/add-new-student', async (req, res) => {
     const schoolId = req.userId;
     const username = GenerateStudentUsername(info.firstName, info.lastName, info.studentID);
     const password = GenerateStudentPassword(info.firstName, info.studentID);
-    console.log(`username: ${username}`);
-    console.log(`password: ${password}`);
     const status = 'student';
-    // const schoolId = 1;
 
     const query = `INSERT INTO test_schema.students_table 
     (username, password, firstName, lastName, studentID, phone, email, fatherName, motherName, fatherPhone, motherPhone, status, schoolID)

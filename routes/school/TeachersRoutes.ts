@@ -1,3 +1,4 @@
+import { GenerateTeacherPassword, GenerateTeacherUsername } from "../../controllers/generateUser";
 import loginStatus from "../../controllers/login";
 import { connection } from "../../server";
 
@@ -25,8 +26,8 @@ router.get('/get-all-teachers', async (req, res) => {
 router.post('/add-new-teacher', async (req,res) => {
     const {info} = req.body;
     const schoolId = req.userId;
-    const username = 'username';
-    const password = 'password';
+    const username = GenerateTeacherUsername(info.firstName, info.lastName, info.teacherID);
+    const password = GenerateTeacherPassword(info.firstName, info.teacherID);
     // const schoolId = 1;
 
     const query = `INSERT INTO test_schema.teachers_table (username, password, firstName, lastName, 

@@ -26,7 +26,8 @@ export default function StudentCard() {
         const student = students.find(student => student.studentID === id)
         
         if (student) {
-            return [student.firstName, student.lastName, student.fatherName, student.motherName, student.phone, student.fatherPhone, student.motherPhone, student.email];
+            return [student.firstName, student.lastName, student.fatherName, student.motherName, student.phone, 
+                student.fatherPhone, student.motherPhone, student.email, student.username, student.password];
         } else {
             return ''
         }
@@ -56,6 +57,8 @@ export default function StudentCard() {
                 <p><span>mother's name:</span> {info[3]}</p>
                 <p><span>mother's phone:</span> {info[6]}</p>
                 <p><span>student's email:</span> {info[7]}</p>
+                <p><span>student's username:</span> {info[8]}</p>
+                <p><span>student's password:</span> {info[9]}</p>
             </CardContent>
         </Card>
     );

@@ -20,7 +20,7 @@ export default function TeacherCard() {
     function getTeacherInfo(id: string | undefined, teachers: Array<teacherInfo>) {
         const teacher = teachers.find(student => student.teacherID === id)
         if (teacher) {
-            return [teacher.firstName, teacher.lastName, teacher.phone, teacher.email];
+            return [teacher.firstName, teacher.lastName, teacher.phone, teacher.email, teacher.username, teacher.password];
         } else {
             return ''
         }
@@ -37,6 +37,8 @@ export default function TeacherCard() {
                 <p><span>teacher's id:</span> {teacherId}</p>
                 <p><span>teacher's phone:</span> {info[2]}</p>
                 <p><span>teacher's email:</span> {info[3]}</p>
+                <p><span>teacher's username:</span> {info[4]}</p>
+                <p><span>teacher's password:</span> {info[5]}</p>
             </CardContent>
         </Card>
     );
