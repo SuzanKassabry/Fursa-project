@@ -14,7 +14,8 @@ import MenuItem from '@mui/material/MenuItem';
 import { Link } from 'react-router-dom';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
-const pages = ['my class', 'courses'];
+const pages:string[] = [];
+// const pages = ['my class', 'courses'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 const TeacherResponsiveAppBar = () => {

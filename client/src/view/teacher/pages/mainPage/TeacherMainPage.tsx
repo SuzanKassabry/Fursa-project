@@ -8,26 +8,19 @@ import axios from 'axios';
 import './TeacherMainPage.scss';
 import { Link } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
-import { getCoursesAsync, teacherCourses } from "../../../../app/reducers/teacher/TeacherSlice";
+import { getClassesAsync, getCoursesAsync, teacherClasses, teacherCourses } from "../../../../app/reducers/teacher/TeacherSlice";
 
-const classes = [{ class_name: 'Class 1A' }];
+// const classes = [{ class_name: 'Class 1A' }];
 
 export default function TeacherMainPage() {
-    // const [courses, setCourses] = useState([]);
     const dispatch = useAppDispatch();
     useEffect(() => {
-        // axios.get('http://localhost:3004/teacherCourses').then(({ data }) => {
-        //     // console.log(data);
-        //     setCourses(data);
-        // })
-
-        // axios.post('/teacher/get-courses-by-teacher-id').then(({data})=>{
-        //     console.log(data);
-        // });
         dispatch(getCoursesAsync());
+        dispatch(getClassesAsync());
         
     }, []);
     const courses = useAppSelector(teacherCourses);
+    const classes = useAppSelector(teacherClasses)
 
     return (
         <div>
@@ -45,9 +38,12 @@ export default function TeacherMainPage() {
                 <div className="myClass">
                     {
                         classes.map((myClass, i) => {
-                            const { class_name } = myClass
+                            const { class_name, id } = myClass
                             return (
-                                <ClassCard class_name={class_name} key={i} />
+                                <Link to='../teacherUser/classPage' key={i}>
+                                    <ClassCard class_name={class_name} id={id} key={i} />
+                                </Link>
+                                
                             );
                         })
                     }
@@ -60,7 +56,7 @@ export default function TeacherMainPage() {
                 <div className="myCourses">
                     {
                         courses.map((course, i) => {
-                            const { name, class_name, class_id } = course;
+                            const { name, class_name, class_id, teacher_id } = course;
                             return (
                                 <Link to="../teacherUser/coursePage" key={i}>
                                     <CourseCard info={course} />

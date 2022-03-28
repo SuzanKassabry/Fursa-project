@@ -6,12 +6,13 @@ interface Course {
     id: number,
     name: string,
     class_name: string,
-    class_id: number
+    class_id: number,
+    teacher_id:string
 }
 
 interface Class {
     id: number,
-    name: string
+    class_name: string
 }
 
 interface TeacherDetails {
@@ -39,6 +40,19 @@ export const getCoursesAsync = createAsyncThunk(
     }
 );
 
+export const getClassesAsync = createAsyncThunk(
+    'teacherData/fetchClasses',
+    async (_, thunkAPI) => {
+        try {
+            const response = await axios.get('/teacher/get-classes-by-teacher-id');
+            const data = response.data;
+            return data;
+        } catch (error: any) {
+            thunkAPI.rejectWithValue(error.response.data)
+        }
+    }
+);
+
 export const teacherReducer = createSlice ({
     name: 'teacherData',
     initialState,
@@ -57,8 +71,19 @@ export const teacherReducer = createSlice ({
         .addCase(getCoursesAsync.rejected, (state: any) => {
             state.status = 'failed';
         })
+        .addCase(getClassesAsync.pending, (state: any) => {
+            state.status = 'loading';
+        })
+        .addCase(getClassesAsync.fulfilled, (state: any, action: any) => {
+            state.status = 'idle';
+            state.classes = action.payload;
+        })
+        .addCase(getClassesAsync.rejected, (state: any) => {
+            state.status = 'failed';
+        })
     }
 })
 
 export const teacherCourses = (state: RootState) => state.teacherData.courses;
+export const teacherClasses = (state: RootState) => state.teacherData.classes;
 export default teacherReducer.reducer;

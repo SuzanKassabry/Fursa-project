@@ -11,16 +11,23 @@ interface CourseCardProps {
         name: string
         class_name: string
         class_id:number
+        teacher_id:string
     }
 
 }
 
 export default function CourseCard(props: CourseCardProps) {
-    const { name, class_name, id, class_id } = props.info;
+    // console.log(props)
+    const { name, class_name, id, class_id, teacher_id } = props.info;
+    // console.log(name)
+    // console.log(class_name)
+    // console.log(id)
+    // console.log(class_id)
+    // console.log(teacher_id)
     const dispatch = useAppDispatch();
 
     function handleClick(){
-        dispatch(select([name, class_name, id, class_id]));
+        dispatch(select([name, class_name, id, class_id, teacher_id]));
     }
     
     return (

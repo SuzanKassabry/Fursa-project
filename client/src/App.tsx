@@ -26,6 +26,7 @@ import TeacherExams from './view/teacher/pages/exams/TeacherExams';
 import WebsiteMainPape from './view/pages/mainPage/MainPage';
 import Login from './view/pages/login/Login';
 import Register from './view/pages/register/Register';
+import TeacherClass from './view/teacher/pages/class/TeacherClass';
 
 function App() {
   return (
@@ -60,6 +61,7 @@ function App() {
         <Route path="teacherUser/courses" element={<Courses />} />
         <Route path="teacherUser/home" element={<TeacherMainPage/>} />
         <Route path="teacherUser/coursePage" element={<Course />} />
+        <Route path="teacherUser/classPage" element={<TeacherClass />} />
         <Route path="teacherUser/homeworks" element={<TeacherHomeworks />} />
         <Route path="teacherUser/exams" element={<TeacherExams />} />
 

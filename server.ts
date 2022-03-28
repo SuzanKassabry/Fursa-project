@@ -99,6 +99,9 @@ app.use('/teacher', homeworksRoute_teacher);
 const examsRoute_teacher = require('./routes/teacher/ExamsRoutes')
 app.use('/teacher', examsRoute_teacher);
 
+const classesRoute_teacher = require('./routes/teacher/ClassesRoutes')
+app.use('/teacher', classesRoute_teacher);
+
 //server listening
 app.listen(process.env.PORT || port, () => {
   return console.log(`Express is listening at http://localhost:${port}`);

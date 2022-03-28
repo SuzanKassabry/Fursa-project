@@ -1,6 +1,6 @@
 import Divider from "@mui/material/Divider";
 import Typography from "@mui/material/Typography";
-import { selectedClassName, selectedCourseId, selectedCourseName } from "../../../../app/reducers/teacher/CourseCardSlice";
+import { selectedClassName, selectedCourseId, selectedCourseName, selectedCourseTeacherId } from "../../../../app/reducers/teacher/CourseCardSlice";
 import CourseResponsiveAppBar from "../../components/courseHeader/CourseAppBar";
 import MaterialSection from "../../components/materialSection/MaterialSection";
 import UpdatesList from "../../components/updatesList/UpdatesList";
@@ -16,37 +16,47 @@ import NewHomeworkDialog from "../../components/newHomeworkDialog/NewHomeworkDia
 import NewExamDialog from "../../components/newExamDialog/NewExamDialog";
 import NewUpdateDialog from "../../components/newUpdateDialog/NewUpdateDialog";
 
-// const updates = [
-//     { update: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' },
-//     { update: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' },
-//     { update: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' },
-//     { update: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' },
-//     { update: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' }
-// ]
-
 export default function Course() {
     const courseName = useAppSelector(selectedCourseName);
     const className = useAppSelector(selectedClassName);
     const courseId = useAppSelector(selectedCourseId);
-    
+    const teacherId = useAppSelector(selectedCourseTeacherId);
+
+    const [currentUserId, setCurrentUserId] = useState('');
     const [openMaterialDialog, setOpenMaterialDialog] = useState(false);
     const [openHomeworkDialog, setOpenHomeworkDialog] = useState(false);
     const [openExamDialog, setOpenExamDialog] = useState(false);
     const [openUpdateDialog, setOpenUpdateDialog] = useState(false);
+    const [showButtons, setShowButtons] = useState(true);
+
+    useEffect(() => {
+        if (currentUserId === teacherId) {
+            setShowButtons(true)
+        } else {
+            setShowButtons(false)
+        }
+    }, [currentUserId]);
+
 
     const dispatch = useAppDispatch();
     useEffect(() => {
         dispatch(getMaterialAsync(courseId));
         dispatch(getUpdatesAsync(courseId));
+        getCurrentUSerID();
     }, []);
     const materials = useAppSelector(courseMaterial);
     const updates = useAppSelector(courseUpdates);
 
-    function handleOpenMaterialDialog(){
+    async function getCurrentUSerID() {
+        const response = await axios.get('/user/get-current-user-id');
+        setCurrentUserId(response.data.currentUserId)
+    }
+
+    function handleOpenMaterialDialog() {
         setOpenMaterialDialog(true)
     }
 
-    function handleOpenHomeworkDialog(){
+    function handleOpenHomeworkDialog() {
         setOpenHomeworkDialog(true)
     }
 
@@ -54,7 +64,7 @@ export default function Course() {
         setOpenExamDialog(true)
     }
 
-    function handleOpenUpdateDialog(){
+    function handleOpenUpdateDialog() {
         setOpenUpdateDialog(true)
     }
 
@@ -71,17 +81,24 @@ export default function Course() {
                     <Typography variant='h5' align='center'>{className}</Typography>
                 </div>
 
-                <div className="buttons">
-                    <Button variant="outlined" startIcon={<AddOutlinedIcon />} onClick={handleOpenMaterialDialog}>Material</Button>
-                    <Button variant="outlined" startIcon={<AddOutlinedIcon />} onClick={handleOpenHomeworkDialog}>Homework</Button>
-                    <Button variant="outlined" startIcon={<AddOutlinedIcon />} onClick={handleOpenExamDialog}>Exam</Button>
-                    <Button variant="outlined" startIcon={<AddOutlinedIcon />} onClick={handleOpenUpdateDialog}>Update</Button>
+                <>
+                    {
+                        showButtons &&
+                        <div className="buttons">
+                            <Button variant="outlined" startIcon={<AddOutlinedIcon />} onClick={handleOpenMaterialDialog}>Material</Button>
+                            <Button variant="outlined" startIcon={<AddOutlinedIcon />} onClick={handleOpenHomeworkDialog}>Homework</Button>
+                            <Button variant="outlined" startIcon={<AddOutlinedIcon />} onClick={handleOpenExamDialog}>Exam</Button>
+                            <Button variant="outlined" startIcon={<AddOutlinedIcon />} onClick={handleOpenUpdateDialog}>Update</Button>
 
-                    <NewMaterialDialog open={openMaterialDialog} setOpen={setOpenMaterialDialog}/>
-                    <NewHomeworkDialog open={openHomeworkDialog} setOpen={setOpenHomeworkDialog}/>
-                    <NewExamDialog open={openExamDialog} setOpen={setOpenExamDialog}/>
-                    <NewUpdateDialog open={openUpdateDialog} setOpen={setOpenUpdateDialog} />
-                </div>
+                            <NewMaterialDialog open={openMaterialDialog} setOpen={setOpenMaterialDialog} />
+                            <NewHomeworkDialog open={openHomeworkDialog} setOpen={setOpenHomeworkDialog} />
+                            <NewExamDialog open={openExamDialog} setOpen={setOpenExamDialog} />
+                            <NewUpdateDialog open={openUpdateDialog} setOpen={setOpenUpdateDialog} />
+
+                        </div>
+                    }
+                </>
+
 
                 <div className="course">
                     <div className="course__material">

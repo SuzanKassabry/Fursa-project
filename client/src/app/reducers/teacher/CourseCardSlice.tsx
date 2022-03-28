@@ -6,6 +6,7 @@ interface TeacherCourseCardState {
     course_name:string;
     class_id: number;
     class_name:string;
+    teacher_id: string;
 }
 
 const initialState: TeacherCourseCardState = {
@@ -13,6 +14,7 @@ const initialState: TeacherCourseCardState = {
     course_name:'',
     class_id: -1,
     class_name:'',
+    teacher_id:''
 }
 
 export const TeacherCourseCardSlice = createSlice({
@@ -20,11 +22,11 @@ export const TeacherCourseCardSlice = createSlice({
     initialState,
     reducers: {
         select: (state, action) => {
-            console.log(action.payload);
             state.course_name = action.payload[0];
             state.class_name = action.payload[1];
             state.id = action.payload[2];
             state.class_id = action.payload[3];
+            state.teacher_id = action.payload[4];
         }
     }
 });
@@ -34,4 +36,5 @@ export const selectedCourseName = (state: RootState) => state.teacherCourseCard.
 export const selectedClassName = (state: RootState) => state.teacherCourseCard.class_name;
 export const selectedCourseId = (state:RootState) => state.teacherCourseCard.id;
 export const selectedClassId = (state:RootState) => state.teacherCourseCard.class_id;
+export const selectedCourseTeacherId = (state:RootState) => state.teacherCourseCard.teacher_id;
 export default TeacherCourseCardSlice.reducer;
