@@ -8,7 +8,6 @@ router.use(loginStatus);
 
 router.get('/get-classes-by-teacher-id', async (req, res) => {
     const teacherId = req.userId
-    console.log('classes for teacher')
 
     const query = `SELECT test_schema.classes_table.id, test_schema.classes_table.name AS class_name
     FROM test_schema.classes_table 
