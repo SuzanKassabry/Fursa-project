@@ -9,7 +9,8 @@ const router = express.Router();
 router.post('/get-updates-by-course-id', async (req, res) => {
     const {courseId} = req.body
     
-    const query = `SELECT test_schema.updates.update FROM test_schema.updates WHERE courseID = ${courseId}`;
+    const query = `SELECT test_schema.updates.update FROM test_schema.updates WHERE courseID = ${courseId}
+    ORDER BY id DESC`;
 
     connection.query(query, (err, result) => {
         try {
@@ -17,6 +18,21 @@ router.post('/get-updates-by-course-id', async (req, res) => {
             res.send(result)
         } catch (error) {
             console.log(`In get-updates-by-course-id error: ${error.message}`);
+            res.status(500).send({ error: error.message });
+        }
+    })
+})
+
+router.get('/get-all-updates', async (req, res) => {
+    
+    const query = `SELECT * FROM test_schema.updates ORDER BY id DESC`;
+
+    connection.query(query, (err, result) => {
+        try {
+            if (err) throw err;
+            res.send(result)
+        } catch (error) {
+            console.log(`In get-all-updates error: ${error.message}`);
             res.status(500).send({ error: error.message });
         }
     })

@@ -10,7 +10,8 @@ router.post('/get-updates-by-class-id', async (req, res) => {
     const {classId} = req.body
     // const classId = 1;
     
-    const query = `SELECT test_schema.updates.update FROM test_schema.updates WHERE classID = ${classId}`;
+    const query = `SELECT test_schema.updates.update FROM test_schema.updates WHERE classID = ${classId}
+    ORDER BY id DESC`;
 
     connection.query(query, (err, result) => {
         try {
@@ -27,7 +28,8 @@ router.post('/get-updates-by-course-id', async (req, res) => {
     const {courseId} = req.body
     // const classId = 1;
     
-    const query = `SELECT test_schema.updates.update FROM test_schema.updates WHERE courseID = ${courseId}`;
+    const query = `SELECT test_schema.updates.update FROM test_schema.updates WHERE courseID = ${courseId}
+    ORDER BY id DESC`;
 
     connection.query(query, (err, result) => {
         try {
