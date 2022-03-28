@@ -38,8 +38,8 @@ const checkedIcon = <CheckBoxIcon fontSize="small" />;
 export default function NewCourseDialog(props: dialogProps) {
     const { open, setOpen } = props
 
-    const students = useAppSelector(schoolStudents);
-    const studentsOfClass = useAppSelector(classStudents);
+    const students = useAppSelector(schoolStudents); //all school students
+    const studentsOfClass = useAppSelector(classStudents); //only class students
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -56,7 +56,6 @@ export default function NewCourseDialog(props: dialogProps) {
                 return true;
             }
         }
-    
         return false;
     }
 
@@ -74,13 +73,14 @@ export default function NewCourseDialog(props: dialogProps) {
                         options={students}
                         disableCloseOnSelect
                         getOptionLabel={(option) => option.firstName.concat('', option.lastName)}
-                        renderOption={(props, option, { selected }) => (
+                        renderOption={(props, option, { selected = checkStudent(option) }) => (
                             <li {...props}>
                                 <Checkbox
                                     icon={icon}
                                     checkedIcon={checkedIcon}
                                     style={{ marginRight: 8 }}
-                                    checked={checkStudent(option)}
+                                    checked={selected}
+                                    // checked={checkStudent(option, selected)}
                                 />
                                 {option.firstName.concat('', option.lastName)}
                             </li>

@@ -25,6 +25,7 @@ import TeacherHomeworks from './view/teacher/pages/homeworks/TeacherHomeworks';
 import TeacherExams from './view/teacher/pages/exams/TeacherExams';
 import WebsiteMainPape from './view/pages/mainPage/MainPage';
 import Login from './view/pages/login/Login';
+import Register from './view/pages/register/Register';
 
 function App() {
   return (
@@ -41,6 +42,7 @@ function App() {
 
         <Route path="/" element={<WebsiteMainPape />} />
         <Route path="login" element={<Login />} />
+        <Route path="register" element={<Register />} />
 
         <Route path="classes" element={<SchoolClasses />} />
         <Route path="students" element={<SchoolStudents />} >

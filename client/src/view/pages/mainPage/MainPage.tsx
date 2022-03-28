@@ -8,7 +8,10 @@ export default function WebsiteMainPape() {
                 <Button variant="outlined">Log in</Button>
             </Link>
             
-            <Button variant="outlined">Register</Button>
+            <Link to ='/register'>
+                <Button variant="outlined">Register</Button>
+            </Link>
+            
         </div>
     );
 }

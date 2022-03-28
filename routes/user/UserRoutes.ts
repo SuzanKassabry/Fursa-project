@@ -51,4 +51,21 @@ router.post('/login', async (req, res) => {
     }
 })
 
+router.post('/register', async (req, res) => {
+    const {name, username, password} = req.body;
+    
+    const query = `INSERT INTO test_schema.schoolusers (name, username, password)
+    VALUES ('${name}', '${username}', '${password}')`
+
+    connection.query(query, (err, result) =>{
+        try{
+            if(err) throw err;
+            res.send({registerStatus: true})
+    } catch (error) {
+        console.error(`In register error: ${error.message}`);
+        res.send({error: error.message, registerStatus: false})
+    }
+    }) 
+})
+
 module.exports = router;

@@ -1,3 +1,4 @@
+import { GenerateStudentPassword, GenerateStudentUsername } from "../../controllers/generateUser";
 import loginStatus from "../../controllers/login";
 import { connection } from "../../server";
 
@@ -39,8 +40,10 @@ router.post('/get-students-by-class-id', async (req, res) => {
 router.post('/add-new-student', async (req, res) => {
     const {info} = req.body;
     const schoolId = req.userId;
-    const username = 'username';
-    const password = 'password';
+    const username = GenerateStudentUsername(info.firstName, info.lastName, info.studentID);
+    const password = GenerateStudentPassword(info.firstName, info.studentID);
+    console.log(`username: ${username}`);
+    console.log(`password: ${password}`);
     const status = 'student';
     // const schoolId = 1;
 

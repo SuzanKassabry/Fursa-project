@@ -146,7 +146,7 @@ export default function NewClass() {
                             )}
                             style={{ width: 500 }}
                             renderInput={(params) => (
-                                <TextField {...params} label="select or search students" placeholder="Favorites" />
+                                <TextField {...params} label="select or search students" />
                             )}
                             size="small"
                             className='inputField'
