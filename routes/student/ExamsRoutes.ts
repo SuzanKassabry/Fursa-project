@@ -7,12 +7,12 @@ const router = express.Router();
 // router.use(loginStatus);
 
 router.post('/get-exams-by-class-id', async (req, res) => {
-    const {classId} = req.body
+    const {classId, date} = req.body
     
     const query = `SELECT * 
     FROM test_schema.exams INNER JOIN test_schema.courses_table
     ON test_schema.exams.courseID = test_schema.courses_table.id 
-    WHERE test_schema.exams.classID = ${classId}`;
+    WHERE test_schema.exams.classID = ${classId} AND test_schema.exams.date = '${date}'`;
 
     connection.query(query, (err, result) => {
         try {

@@ -35,7 +35,7 @@ export default function NewHomeworkDialog(props: dialogProps) {
     function handleAdd(){
         // const date = new Date();
         if(homework !== "") {
-            const date = new Date().toISOString().slice(0, 10).replace('T', ' ');
+            const date = new Date().toISOString().slice(0, 10)
             axios.post('/teacher/add-new-homework', { 'description': homework, 'date':date, 'courseId':courseId, 'classId':classId })
             // .then(({ data }) => console.log(data));
             // dispatch(getHomeworksAsync(courseId));

@@ -20,14 +20,16 @@ import { selectedCourseId } from "../../../../app/reducers/teacher/CourseCardSli
 export default function TeacherExams() {
     const courseId = useAppSelector(selectedCourseId);
     const dispatch = useAppDispatch();
-    useEffect(() => {
-        dispatch(getExamsAsync(courseId));
-    }, []);
-    const exams = useAppSelector(courseExams);
-
     const [selectedDate, setSelectedDate] = useState<Date | null>(
         new Date(),
     );
+    useEffect(() => {
+        const date = selectedDate ? selectedDate.toISOString().slice(0,10) : selectedDate;
+        dispatch(getExamsAsync({courseId, date}));
+    }, [selectedDate]);
+    const exams = useAppSelector(courseExams);
+
+    
 
     const handleChange = (newValue: Date | null) => {
         setSelectedDate(newValue);

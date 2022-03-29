@@ -23,17 +23,17 @@ import { classExams, getExamsAsync } from "../../../../app/reducers/student/Clas
 
 export default function StudentExams() {
     const dispatch = useAppDispatch();
-    useEffect(() => {
-        axios.post('/student/get-class-id-by-student-id').then(({data}) => {
-            console.log(data.id);
-            dispatch(getExamsAsync(data.id));
-        });
-    }, []);
-    const exams = useAppSelector(classExams);
-
     const [selectedDate, setSelectedDate] = useState<Date | null>(
         new Date(),
     );
+
+    useEffect(() => {
+        const date = selectedDate ? selectedDate.toISOString().slice(0,10) : selectedDate;
+        axios.post('/student/get-class-id-by-student-id').then(({data}) => {
+            dispatch(getExamsAsync({'classId':data.id, 'date':date}));
+        });
+    }, [selectedDate]);
+    const exams = useAppSelector(classExams);
 
     const handleChange = (newValue: Date | null) => {
         setSelectedDate(newValue);

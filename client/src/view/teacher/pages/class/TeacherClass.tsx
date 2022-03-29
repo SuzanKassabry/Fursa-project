@@ -6,16 +6,17 @@ import { useState, useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from '../../../../app/hooks';
 import { classCourses, classUpdates, getCoursesAsync, getUpdatesAsync } from "../../../../app/reducers/teacher/ClassDataSlice";
 import TeacherResponsiveAppBar from "../../components/header/TeacherAppBar";
-import { selectedClassId } from "../../../../app/reducers/teacher/ClassCardSlice";
+import { selectedClassId, selectedClassName } from "../../../../app/reducers/teacher/ClassCardSlice";
 import CourseCard from "../../components/courseCard/CourseCard";
 import UpdatesList from "../../components/updatesList/UpdatesList";
 import './TeacherClass.scss';
 
-const class_name = 'Class 1A';
+// const class_name = 'Class 1A';
 
 export default function TeacherClass() {
     // const [classId, setClassId] = useState(-1);
-    const classId = useAppSelector(selectedClassId)
+    const classId = useAppSelector(selectedClassId);
+    const class_name = useAppSelector(selectedClassName);
     const dispatch = useAppDispatch();
     useEffect(() => {
         dispatch(getUpdatesAsync(classId));

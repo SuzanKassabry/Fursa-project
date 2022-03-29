@@ -31,6 +31,7 @@ export default function NewExamDialog(props: dialogProps) {
 
     const handleClose = () => {
         setOpen(false);
+        setSelectedDate(new Date());
     };
 
     const handleDateSelection = (newValue: Date | null) => {
@@ -42,11 +43,15 @@ export default function NewExamDialog(props: dialogProps) {
         setExamMaterial(ev.target.value);
     }
 
-    function handleAdd() {
+    async function handleAdd() {
         if (examMaterial !== "") {
-            axios.post('/teacher/add-new-exam', { 'examMaterial': examMaterial, 'courseId':courseId, 'classId':classId })
-                // .then(({ data }) => console.log(data));
-
+            await axios.post('/teacher/add-new-exam',
+                {
+                    'examMaterial': examMaterial,
+                    'date':selectedDate ? selectedDate.toISOString().slice(0,10): selectedDate,
+                    'courseId': courseId,
+                    'classId': classId
+                });
         }
         handleClose();
     }

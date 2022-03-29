@@ -12,7 +12,8 @@ router.post('/get-homeworks-by-class-id', async (req, res) => {
     const query = `SELECT * 
     FROM test_schema.homeworks INNER JOIN test_schema.courses_table
     ON test_schema.homeworks.courseID = test_schema.courses_table.id 
-    WHERE test_schema.homeworks.classID = ${classId}`;
+    WHERE test_schema.homeworks.classID = ${classId}
+    ORDER BY date DESC`;
 
     connection.query(query, (err, result) => {
         try {

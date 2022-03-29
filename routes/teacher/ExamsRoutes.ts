@@ -7,12 +7,12 @@ const router = express.Router();
 // router.use(loginStatus);
 
 router.post('/get-exams-by-course-id', async (req, res) => {
-    const {courseId} = req.body
+    const {courseId, date} = req.body
     
     const query = `SELECT * 
     FROM test_schema.exams INNER JOIN test_schema.courses_table
     ON test_schema.exams.courseID = test_schema.courses_table.id 
-    WHERE test_schema.exams.courseID = ${courseId}`;
+    WHERE test_schema.exams.courseID = ${courseId} AND test_schema.exams.date = '${date}'`;
 
     connection.query(query, (err, result) => {
         try {
@@ -28,8 +28,8 @@ router.post('/get-exams-by-course-id', async (req, res) => {
 router.post('/add-new-exam', async (req, res) => {
     const {examMaterial, date, courseId, classId} = req.body;
 
-    const query = `INSERT INTO test_schema.exams (examMaterial, courseID, classID)
-    VALUES ('${examMaterial}', ${courseId}, ${classId})`
+    const query = `INSERT INTO test_schema.exams (examMaterial, date, courseID, classID)
+    VALUES ('${examMaterial}', '${date}', ${courseId}, ${classId})`
 
     connection.query(query, (err, result) => {
         try {

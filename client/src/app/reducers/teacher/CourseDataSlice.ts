@@ -69,10 +69,12 @@ export const getHomeworksAsync = createAsyncThunk (
 
 export const getExamsAsync = createAsyncThunk (
     'courseData/fetchExams',
-    async(courseId:any, thunkAPI) => {
+    async(params:any, thunkAPI) => {
         try{
-            const response = await axios.post('/teacher/get-exams-by-course-id', {courseId:courseId});
+            const {courseId, date} = params;
+            const response = await axios.post('/teacher/get-exams-by-course-id', {courseId:courseId, date:date});
             const data = response.data;
+            console.log(data)
             return data;
         } catch (error:any) {
             thunkAPI.rejectWithValue(error.response.data)

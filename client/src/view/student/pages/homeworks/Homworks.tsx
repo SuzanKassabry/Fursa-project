@@ -59,7 +59,7 @@ export default function StudentHomeworks() {
                                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                             >
                                                 <TableCell align="center" component="th" scope="row">
-                                                    {date}
+                                                    {date.slice(0,10)}
                                                 </TableCell>
                                                 <TableCell align="center">{name}</TableCell>
                                                 <TableCell align="center">{description}</TableCell>

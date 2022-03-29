@@ -12,7 +12,8 @@ router.post('/get-homeworks-by-course-id', async (req, res) => {
     const query = `SELECT * 
     FROM test_schema.homeworks INNER JOIN test_schema.courses_table
     ON test_schema.homeworks.courseID = test_schema.courses_table.id 
-    WHERE test_schema.homeworks.courseID = ${courseId}`;
+    WHERE test_schema.homeworks.courseID = ${courseId}
+    ORDER BY date DESC`;
 
     connection.query(query, (err, result) => {
         try {
@@ -28,9 +29,8 @@ router.post('/get-homeworks-by-course-id', async (req, res) => {
 router.post('/add-new-homework', async (req, res) => {
     const {description, date, courseId, classId} = req.body;
 
-    const query = `INSERT INTO test_schema.homeworks (description, courseID, classID)
-    VALUES ('${description}',${courseId}, ${classId})`
-    console.log(query)
+    const query = `INSERT INTO test_schema.homeworks (description, date, courseID, classID)
+    VALUES ('${description}', '${date}', ${courseId}, ${classId})`
 
     connection.query(query, (err, result) => {
         try {
@@ -49,7 +49,8 @@ router.post('/get-homeworks-by-class-id', async (req, res) => {
     const query = `SELECT * 
     FROM test_schema.homeworks INNER JOIN test_schema.courses_table
     ON test_schema.homeworks.courseID = test_schema.courses_table.id 
-    WHERE test_schema.homeworks.classID = ${classId}`;
+    WHERE test_schema.homeworks.classID = ${classId}
+    ORDER BY date DESC`;
 
     connection.query(query, (err, result) => {
         try {
