@@ -13,24 +13,12 @@ import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import { useAppSelector } from '../../../../app/hooks';
 import { classStudents } from '../../../../app/reducers/school/ClassDetailsSlice';
 import { schoolStudents } from '../../../../app/reducers/school/SchoolSlice';
+import { useEffect, useState } from 'react';
 
 interface dialogProps {
     open: any;
     setOpen: any;
 }
-
-const studentsOfClass = [
-    {id: 1, first: "Suzan", last: "Kassabry 1", studentId: "123456789", phone: "0537756044"},
-    {id: 2, first: "Suzan", last: "Kassabry 2", studentId: "123456789", phone: "0537756044"},
-    {id: 3, first: "Suzan", last: "Kassabry 3", studentId: "123456789", phone: "0537756044"},
-    {id: 4, first: "Suzan", last: "Kassabry 4", studentId: "123456789", phone: "0537756044"},
-    {id: 5, first: "Suzan", last: "Kassabry 5", studentId: "123456789", phone: "0537756044"},
-    {id: 6, first: "Suzan", last: "Kassabry 6", studentId: "123456789", phone: "0537756044"},
-    {id: 7, first: "Suzan", last: "Kassabry 7", studentId: "123456789", phone: "0537756044"},
-    {id: 8, first: "Suzan", last: "Kassabry 8", studentId: "123456789", phone: "0537756044"},
-    {id: 9, first: "Suzan", last: "Kassabry 9", studentId: "123456789", phone: "0537756044"},
-    {id: 10, first: "Suzan", last: "Kassabry 10", studentId: "123456789", phone: "0537756044"}
-]
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -38,8 +26,9 @@ const checkedIcon = <CheckBoxIcon fontSize="small" />;
 export default function NewCourseDialog(props: dialogProps) {
     const { open, setOpen } = props
 
-    const students = useAppSelector(schoolStudents); //all school students
+    const allStudents = useAppSelector(schoolStudents); //all school students
     const studentsOfClass = useAppSelector(classStudents); //only class students
+    let students = studentsOfClass;
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -49,7 +38,7 @@ export default function NewCourseDialog(props: dialogProps) {
         setOpen(false);
     };
 
-    function checkStudent(student:any) {
+    function checkStudent(student: any) {
         let i;
         for (i = 0; i < studentsOfClass.length; i++) {
             if (studentsOfClass[i].id === student.id) {
@@ -57,6 +46,10 @@ export default function NewCourseDialog(props: dialogProps) {
             }
         }
         return false;
+    };
+
+    function handleClick(ev: any, value: any) {
+        console.log(value)
     }
 
     return (
@@ -69,18 +62,19 @@ export default function NewCourseDialog(props: dialogProps) {
                     </DialogContentText>
                     <Autocomplete
                         multiple
+                        // value={students}
                         id="checkboxes-tags-demo"
-                        options={students}
+                        options={allStudents}
                         disableCloseOnSelect
                         getOptionLabel={(option) => option.firstName.concat('', option.lastName)}
-                        renderOption={(props, option, { selected = checkStudent(option) }) => (
-                            <li {...props}>
+                        renderOption={(props, option, { selected }) => (
+                            <li {...props} >
                                 <Checkbox
                                     icon={icon}
                                     checkedIcon={checkedIcon}
                                     style={{ marginRight: 8 }}
                                     checked={selected}
-                                    // checked={checkStudent(option, selected)}
+                                    // checked={checkStudent(option)}
                                 />
                                 {option.firstName.concat('', option.lastName)}
                             </li>
@@ -91,6 +85,8 @@ export default function NewCourseDialog(props: dialogProps) {
                         )}
                         size="small"
                         className='inputField'
+                        isOptionEqualToValue={(option, value) => option.studentID === value.studentID}
+                        onChange={handleClick}
                     />
                 </DialogContent>
                 <DialogActions>

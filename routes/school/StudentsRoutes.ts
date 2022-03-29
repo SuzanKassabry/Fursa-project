@@ -62,4 +62,22 @@ router.post('/add-new-student', async (req, res) => {
     })
 })
 
+router.post('/add-students-to-class', async (req, res) => {
+    const {studentId, classId} = req.body;
+
+    const query = `UPDATE test_schema.students_table
+    SET classID = ${classId}
+    WHERE id = ${studentId}`;
+
+    connection.query(query, (err, result) => {
+        try{
+            if (err) throw err;
+            res.send(result);
+        } catch (error) {
+            console.log(`In add-students-to-class error: ${error}`)
+            res.status(500).send({error: error.message});
+        }
+    })
+})
+
 module.exports = router;

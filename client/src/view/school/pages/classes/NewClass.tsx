@@ -13,17 +13,6 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
-// const teachers = [
-//     { label: 'Suzan Kassabry' },
-//     { label: 'Lama Bisharat' },
-//     { label: 'Rania Ateek' }
-// ]
-
-// const students = [
-//     { name: 'Suzan Kassabry 1' }, { name: 'Suzan Kassabry 2' }, { name: 'Suzan Kassabry 3' }, { name: 'Suzan Kassabry 4' },
-//     { name: 'Suzan Kassabry 5' }, { name: 'Suzan Kassabry 6' }, { name: 'Suzan Kassabry 7' }, { name: 'Suzan Kassabry 8' }
-// ]
-
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
@@ -41,30 +30,31 @@ export default function NewClass() {
     const [className, setClassName] = useState('');
     const [teacherName, setTeacherName] = useState('');
     const [teacherId, setTeacherId] = useState(-1);
+    const [selectedStudents, setSelectedStudents] = useState([]);
 
     function handleClassName(ev: any) {
-        // console.log(ev.target.value);
         setClassName(ev.target.value)
     }
 
     function handleTeacherName(ev: any, value: any) {
-        // console.log(value.info.firstName.concat(' ', value.info.lastName));
         setTeacherName(value.firstName.concat(' ', value.lastName))
         setTeacherId(value.id);
         console.log('teacher id:', value.id);
     }
 
     function handleStudent(ev: any, value: any) {
-        // console.log(value);
+        setSelectedStudents(value);
     }
 
     function addNewClass() {
-        // axios.post('http://localhost:3004/schoolClasses', { 'name': className, 'teacher': teacherName })
-        //     .then(({ data }) => console.log(data));
-
         axios.post('school/add-new-class', { className: className, teacherId: teacherId })
             .then(data => {
-                console.log(data);
+                const classId = data.data.insertId;
+                //edit students
+                selectedStudents.forEach( (student) => {
+                    const {id} = student;
+                    axios.post('/school/add-students-to-class', {'classId': classId, 'studentId':id})
+                })
             }).catch(err => {
                 console.error(err)
             })
