@@ -9,6 +9,10 @@ import Button from "@mui/material/Button";
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 import { Value } from "sass";
+import MainResponsiveAppBar from "../../components/header/Header";
+import Card from "@mui/material/Card";
+import './Register.scss';
+import Typography from "@mui/material/Typography";
 
 export default function Register() {
     const nav = useNavigate();
@@ -52,15 +56,15 @@ export default function Register() {
     };
 
     async function handleRegister() {
-        if (name === '' || username ==='' || password ==='' || validationPassword === '') {
+        if (name === '' || username === '' || password === '' || validationPassword === '') {
             alert("missing data, fill all the form fields!")
 
-        }else if (password !== validationPassword) {
+        } else if (password !== validationPassword) {
             alert("the two password do not match !!!")
-        }else {
+        } else {
             //add new school user to data base 
             //nav to login page
-            const response = await axios.post('/user/register', {name, username, password});
+            const response = await axios.post('/user/register', { name, username, password });
             if (response.data.registerStatus) {
                 alert("registered successfully!")
                 nav('/login');
@@ -78,61 +82,81 @@ export default function Register() {
 
     return (
         <div>
-            <TextField
-                id="outlined-basic"
-                required
-                label="school name"
-                variant="outlined"
-                // error={name === ''}
-                // helperText = {name === '' ? 'Empty field' : ""}
-                onKeyUp={handleName} />
+            <MainResponsiveAppBar />
 
-            <TextField
-                id="outlined-basic"
-                required
-                label="username"
-                variant="outlined"
-                onKeyUp={handleUsername} />
+            <div className="registerPageContent">
+                <Card sx={{ minWidth: 275 }} className='registerCard'>
+                    <Typography className="txt" sx={{ fontSize: 18 }} color="text.secondary" gutterBottom>
+                        enter your school name:
+                    </Typography>
+                    <TextField
+                        id="outlined-basic"
+                        required
+                        label="school name"
+                        variant="outlined"
+                        // error={name === ''}
+                        // helperText = {name === '' ? 'Empty field' : ""}
+                        onKeyUp={handleName} />
 
-            <OutlinedInput
-                required
-                label="password"
-                type={showPassword ? 'text' : 'password'}
-                endAdornment={
-                    <InputAdornment position="end">
-                        <IconButton
-                            aria-label="toggle password visibility"
-                            onClick={handleClickShowPassword1}
-                            onMouseDown={handleMouseDownPassword}
-                            edge="end"
-                        >
-                            {showPassword ? <VisibilityOff /> : <Visibility />}
-                        </IconButton>
-                    </InputAdornment>
-                }
-                onKeyUp={handlePassword1}
-            />
+                    <Typography className="txt" sx={{ fontSize: 18 }} color="text.secondary" gutterBottom>
+                        enter a username:
+                    </Typography>
+                    <TextField
+                        id="outlined-basic"
+                        required
+                        label="username"
+                        variant="outlined"
+                        onKeyUp={handleUsername} />
 
-            <OutlinedInput
-                required
-                label="re-enter password"
-                type={showValidationPassword ? 'text' : 'password'}
-                endAdornment={
-                    <InputAdornment position="end">
-                        <IconButton
-                            aria-label="toggle password visibility"
-                            onClick={handleClickShowPassword2}
-                            onMouseDown={handleMouseDownPassword}
-                            edge="end"
-                        >
-                            {showValidationPassword ? <VisibilityOff /> : <Visibility />}
-                        </IconButton>
-                    </InputAdornment>
-                }
-                onKeyUp={handlePassword2}
-            />
+                    <Typography className="txt" sx={{ fontSize: 18 }} color="text.secondary" gutterBottom>
+                        enter a password:
+                    </Typography>
+                    <OutlinedInput
+                        required
+                        label="password"
+                        type={showPassword ? 'text' : 'password'}
+                        endAdornment={
+                            <InputAdornment position="end">
+                                <IconButton
+                                    aria-label="toggle password visibility"
+                                    onClick={handleClickShowPassword1}
+                                    onMouseDown={handleMouseDownPassword}
+                                    edge="end"
+                                >
+                                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                                </IconButton>
+                            </InputAdornment>
+                        }
+                        onKeyUp={handlePassword1}
+                    />
 
-            <Button variant="contained" onClick={handleRegister}>Register</Button>
+                    <Typography className="txt" sx={{ fontSize: 18 }} color="text.secondary" gutterBottom>
+                        re-enter the password for validation:
+                    </Typography>
+                    <OutlinedInput
+                        required
+                        label="re-enter password"
+                        type={showValidationPassword ? 'text' : 'password'}
+                        endAdornment={
+                            <InputAdornment position="end">
+                                <IconButton
+                                    aria-label="toggle password visibility"
+                                    onClick={handleClickShowPassword2}
+                                    onMouseDown={handleMouseDownPassword}
+                                    edge="end"
+                                >
+                                    {showValidationPassword ? <VisibilityOff /> : <Visibility />}
+                                </IconButton>
+                            </InputAdornment>
+                        }
+                        onKeyUp={handlePassword2}
+                    />
+
+                    <Button className="registerBtn" variant="contained" onClick={handleRegister}>Register</Button>
+                </Card>
+            </div>
+
+
         </div>
     );
 }

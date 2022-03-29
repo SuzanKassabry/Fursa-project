@@ -1,0 +1,29 @@
+.mainPageContent{
+    .image{
+        margin-top: 5vh;
+        // border: 2px red solid;
+        background-image: url("https://images.ctfassets.net/hrltx12pl8hq/6f2M9koJF7uhwGGao7WCX5/8683a9c8388dada729c7caeefc87872b/compressed_shutterstock_1274296330.jpg?fit=fill&w=800&h=300");
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 100%;
+        width: 100%;
+        height: 50vh;
+        display: flex;
+        align-content: center;
+
+        .text{
+            width: 40%;
+            margin-left: 3vw;
+            p{
+                color: rgb(255, 255, 255);
+                font-size: 33px;
+            }
+
+            .buttons{
+                display: flex;
+                justify-content: space-around;
+
+            }
+        }
+    }
+}

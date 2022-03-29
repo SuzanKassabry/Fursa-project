@@ -13,6 +13,9 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { useState } from 'react';
 import axios from "axios";
 import { useNavigate } from 'react-router-dom'
+import MainResponsiveAppBar from '../../components/header/Header';
+import './Login.scss';
+import Card from '@mui/material/Card';
 
 export default function Login() {
     const nav = useNavigate();
@@ -51,15 +54,15 @@ export default function Login() {
                 // alert("login succsess");
                 // nav('/classes');
                 switch (type) {
-                    case 'school':{
+                    case 'school': {
                         nav('/classes');
                         break;
                     }
-                    case 'student':{
+                    case 'student': {
                         nav('/studentUser/myclass')
                         break;
                     }
-                    case 'teacher':{
+                    case 'teacher': {
                         nav('/teacherUser/home')
                         break;
                     }
@@ -83,45 +86,55 @@ export default function Login() {
 
     return (
         <div>
-            <FormControl>
-                <FormLabel id="demo-controlled-radio-buttons-group">user type:</FormLabel>
-                <RadioGroup
-                    aria-labelledby="demo-controlled-radio-buttons-group"
-                    name="controlled-radio-buttons-group"
-                    value={type}
-                    onChange={handleType}
-                >
-                    <FormControlLabel value="school" control={<Radio />} label="school" />
-                    <FormControlLabel value="teacher" control={<Radio />} label="teacher" />
-                    <FormControlLabel value="student" control={<Radio />} label="student" />
+            <MainResponsiveAppBar />
 
-                </RadioGroup>
-            </FormControl>
-            <TextField
-                required
-                label="username"
-                onKeyUp={handleUsername}
-            />
-            <OutlinedInput
-                required
-                label="password"
-                type={showPassword ? 'text' : 'password'}
-                endAdornment={
-                    <InputAdornment position="end">
-                        <IconButton
-                            aria-label="toggle password visibility"
-                            onClick={handleClickShowPassword}
-                            onMouseDown={handleMouseDownPassword}
-                            edge="end"
+            <div className="loginPageContent">
+                <Card sx={{ minWidth: 275 }} className='loginCard'>
+                    <FormControl>
+                        <FormLabel id="demo-controlled-radio-buttons-group">select your type:</FormLabel>
+                        <RadioGroup
+                            aria-labelledby="demo-controlled-radio-buttons-group"
+                            name="controlled-radio-buttons-group"
+                            value={type}
+                            onChange={handleType}
                         >
-                            {showPassword ? <VisibilityOff /> : <Visibility />}
-                        </IconButton>
-                    </InputAdornment>
-                }
-                onKeyUp={handlePassword}
-            />
+                            <FormControlLabel value="school" control={<Radio />} label="school" />
+                            <FormControlLabel value="teacher" control={<Radio />} label="teacher" />
+                            <FormControlLabel value="student" control={<Radio />} label="student" />
 
-            <Button variant="contained" onClick={handleLogin}>LogIn</Button>
+                        </RadioGroup>
+                    </FormControl>
+                    <TextField
+                        required
+                        label="username"
+                        onKeyUp={handleUsername}
+                    />
+                    <OutlinedInput
+                        required
+                        label="password"
+                        type={showPassword ? 'text' : 'password'}
+                        endAdornment={
+                            <InputAdornment position="end">
+                                <IconButton
+                                    aria-label="toggle password visibility"
+                                    onClick={handleClickShowPassword}
+                                    onMouseDown={handleMouseDownPassword}
+                                    edge="end"
+                                >
+                                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                                </IconButton>
+                            </InputAdornment>
+                        }
+                        onKeyUp={handlePassword}
+                    />
+
+                    <Button variant="contained" onClick={handleLogin}>LogIn</Button>
+
+
+                </Card>
+            </div>
+
         </div>
+
     );
 }

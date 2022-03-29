@@ -1,0 +1,17 @@
+.loginPageContent{
+    width: 30%;
+    // border: 2px red solid;
+    margin: auto;
+    margin-top: 12vh;
+
+    .loginCard{
+        padding: 2vw;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-content: center;
+        align-items: center;
+        width: 30vw;
+        height: 60vh;
+    }
+}
