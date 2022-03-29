@@ -14,9 +14,10 @@ import MenuItem from '@mui/material/MenuItem';
 import { Link } from 'react-router-dom';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import './AppBar.scss';
+import axios from 'axios';
 
 const pages = ['classes', 'students', 'teachers'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const settings = ['Logout'];
 
 const SchoolResponsiveAppBar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
@@ -36,6 +37,12 @@ const SchoolResponsiveAppBar = () => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  async function handleLogout() {
+    handleCloseUserMenu();
+    const response = await axios.get('/user/logout');
+    console.log(response);
+  }
 
   return (
     <AppBar className='bar' position="static">
@@ -134,7 +141,7 @@ const SchoolResponsiveAppBar = () => {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                <MenuItem key={setting} onClick={handleLogout}>
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
               ))}

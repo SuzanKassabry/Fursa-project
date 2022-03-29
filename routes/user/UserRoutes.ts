@@ -75,11 +75,21 @@ router.get('/get-current-user-id', async (req, res) => {
         const decodedJWT = jwt.decode(userInfo, JWT_SECRET);
         const { userId } = decodedJWT;
         if (userId) {
-            res.send({'currentUserId': userId})
+            res.send({ 'currentUserId': userId })
         }
     } else {
         console.log('in get-current-user-id error: no userInfo found in cookies');
-        res.send({'currentUserId': undefined})
+        res.send({ 'currentUserId': undefined })
+    }
+})
+
+router.get('/logout', async (req, res) => {
+    try {
+        res.clearCookie('userInfo');
+        res.send({logoutStatus: true})
+    } catch (error) {
+        console.log(`in logout error: ${error.message}`)
+        res.send({ logoutStatus: false })
     }
 })
 
