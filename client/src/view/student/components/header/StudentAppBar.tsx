@@ -13,13 +13,16 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import { Link } from 'react-router-dom';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import axios from 'axios';
+import {useNavigate} from 'react-router-dom';
 
 const pages = ['myclass', 'homeworks', 'exams'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const settings = ['Logout'];
 
 const StudentResponsiveAppBar = () => {
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+    const nav = useNavigate()
 
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElNav(event.currentTarget);
@@ -35,6 +38,16 @@ const StudentResponsiveAppBar = () => {
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
     };
+
+    async function handleLogout() {
+        handleCloseUserMenu();
+        const response = await axios.get('/user/logout');
+        if (response.data.logoutStatus) {
+            nav('/login')
+        } else {
+            alert('logout fails try again later')
+        }
+    }
 
     return (
         <AppBar position="static">
@@ -102,7 +115,7 @@ const StudentResponsiveAppBar = () => {
                             // >
                             //     {page}
                             // </Button>
-                            <Link to={`../studentUser/${page}`}>
+                            <Link to={`../studentUser/${page}`} key={page}>
                                 <Button
                                     key={page}
                                     onClick={handleCloseNavMenu}
@@ -140,7 +153,7 @@ const StudentResponsiveAppBar = () => {
                             onClose={handleCloseUserMenu}
                         >
                             {settings.map((setting) => (
-                                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                                <MenuItem key={setting} onClick={handleLogout}>
                                     <Typography textAlign="center">{setting}</Typography>
                                 </MenuItem>
                             ))}
