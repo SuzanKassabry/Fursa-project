@@ -11,7 +11,7 @@ export default function WebsiteMainPape() {
             <div className='mainPageContent'>
                 <div className="image">
                     <div className="text">
-                        <p>Our website was developped t help you manage your classes easily,
+                        <p>Our website was developped to help you manage your classes easily,
                             in addtion it let your teachers and students have more efficient learning. </p>
 
                         <div className="buttons">
